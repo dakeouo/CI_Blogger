@@ -9,6 +9,7 @@ application/logs/*
 !application/*/.htaccess
 
 application/config/database.php
+application/config/config.php
 
 composer.lock
 
@@ -30,3 +31,4 @@ user_guide_src/*
 /tests/results/
 
 note.txt
+asset/dash/js/flot-data.js
