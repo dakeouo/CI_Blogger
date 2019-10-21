@@ -23,6 +23,7 @@ class Dash extends CI_Controller {
 		$this->load->view('dash/index', $data);
 		$this->load->view('dash/layout/footer');
 		$this->load->view('dash/layout/flot');
+		$this->load->view('tag_body_end');
 	}
 
 	public function changePasswd($msg = -1){
@@ -33,6 +34,7 @@ class Dash extends CI_Controller {
 		$this->load->view('dash/layout/nav', $data);
 		$this->load->view('dash/changePasswd', $data);
 		$this->load->view('dash/layout/footer');
+		$this->load->view('tag_body_end');
 	}
 
 	public function changePasswdCheck(){
@@ -90,6 +92,7 @@ class Dash extends CI_Controller {
 		$this->load->view('dash/layout/header', $data);
 		$this->load->view('dash/setup');
 		$this->load->view('dash/layout/footer');
+		$this->load->view('tag_body_end');
 	}
 
 	public function login($msg = -1){
@@ -99,6 +102,7 @@ class Dash extends CI_Controller {
 		$this->load->view('dash/layout/header', $data);
 		$this->load->view('dash/login');
 		$this->load->view('dash/layout/footer');
+		$this->load->view('tag_body_end');
 	}
 	public function logout(){
 		$this->load->helper('url');

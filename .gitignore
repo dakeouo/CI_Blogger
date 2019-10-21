@@ -32,3 +32,5 @@ user_guide_src/*
 
 note.txt
 asset/dash/js/flot-data.js
+*/php7.0-errors.log
+application/content/

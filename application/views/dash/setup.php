@@ -35,4 +35,3 @@
             else document.getElementById('msg-box').style.display = "block";
         }
     </script>
-</body>

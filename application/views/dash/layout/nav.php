@@ -30,24 +30,24 @@
                 <li>
                     <a href="#"><i class="fas fa-atlas"></i>&nbsp;文章<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="#">類別/標籤</a></li>
-                        <li><a href="#">文章管理</a></li>
+                        <li><a href="<?php echo base_url("dash/category");?>">類別/標籤</a></li>
+                        <li><a href="<?php echo base_url("dash/article");?>">文章管理</a></li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                <li><a href="#"><i class="fas fa-briefcase"></i>&nbsp;作品集</a></li>
                 <li><a href="#"><i class="fas fa-chart-area"></i>&nbsp;統計分析</a></li>
                 <li>
                     <a href="#"><i class="fas fa-cog"></i>&nbsp;設定<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="#">作者資訊</a></li>
-                        <li><a href="<?php echo base_url("dash/changePasswd"); ?>">更改密碼</a></li>
+                        <li><a href="<?php echo base_url("dash/changePasswd");?>">更改密碼</a></li>
                         <li><a href="#">系統重置</a></li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-                <li><a href="<?php echo base_url("dash/logout"); ?>"><i class="fas fa-sign-out-alt"></i>&nbsp;登出</a></li>
+                <li><a href="<?php echo base_url("dash/logout");?>"><i class="fas fa-sign-out-alt"></i>&nbsp;登出</a></li>
             </ul>
         </div>
     </div>
 </nav>
+</head>

@@ -58,3 +58,16 @@ $route['dash/login']['GET'] = 'dash/login';
 $route['dash/login']['POST'] = 'dash/loginCheck';
 $route['dash/changePasswd']['GET'] = 'dash/changePasswd';
 $route['dash/changePasswd']['POST'] = 'dash/changePasswdCheck';
+
+$route['dash/category']['GET'] = 'article/category';
+$route['dash/category']['POST'] = 'article/categoryNew';
+$route['dash/category/view/C([0-9]{3})'] = 'article/categoryView/C$1';
+$route['dash/category/tagView/(:any)'] = 'article/tagView/$1';
+$route['dash/category/edit'] = 'article/categoryEdit';
+$route['dash/category/delete/C([0-9]{3})'] = 'article/categoryDelete/C$1';
+
+$route['dash/article']['GET'] = 'article/index';
+$route['dash/article/new'] = 'article/postArticle';
+$route['dash/article/edit/([0-9]{14})'] = 'article/ArticleEdit/$1';
+$route['dash/article/save'] = 'article/postArticleSave';
+$route['dash/article/delete/([0-9]{14})']['GET'] = 'article/ArticleDelete/$1';
