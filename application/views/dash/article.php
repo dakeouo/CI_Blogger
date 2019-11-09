@@ -24,8 +24,9 @@
                                         <thead style="">
                                             <tr>
                                                 <td>類別</td>
-                                                <td style="min-width: 50%; width: auto;">標題</td>
-                                                <td width="140px">發布日期</td>
+                                                <td style="min-width: 20em; width: auto;">標題</td>
+                                                <td width="150px">發布日期</td>
+                                                <td width="150px">修改日期</td>
                                                 <td width="50px">預覽</td>
                                                 <td width="50px">修改</td>
                                                 <td width="50px">刪除</td>
@@ -46,12 +47,16 @@
                                                 if(!$row->publishTime) echo "無";
                                                 else echo $row->publishTime;
                                                 echo '</td>';
-                                                echo "<td><button type='button' style=\"padding:4px 10px;\" class='btn btn-primary' onclick=\"\">預覽</button></td>";
+                                                echo '<td>';
+                                                if(!$row->editTime) echo "無";
+                                                else echo $row->editTime;
+                                                echo '</td>';
+                                                echo "<td><button type='button' style=\"padding:4px 10px;\" class='btn btn-primary' onclick=\"location.href='".base_url("dash/article/preview/".$row->id)."'\">預覽</button></td>";
                                                 echo "<td>";
                                                 echo "<button type='button' style=\"padding:4px 10px;\" class='btn btn-warning'onclick=\"location.href='".base_url("dash/article/edit/".$row->id)."'\">修改</button>";
                                                 echo "</td>";
                                                 echo "<td>";
-                                                echo "<button type='button' style=\"padding:4px 10px;\" class='btn btn-danger' onclick=\"location.href='".base_url("dash/article/delete/".$row->id)."'\">刪除</button>";
+                                                echo "<button type='button' style=\"padding:4px 10px;\" class='btn btn-danger disabled' onclick=\"location.href='".base_url("dash/article/delete/".$row->id)."'\">刪除</button>";
                                                 echo "</td>";
                                                 echo "</tr>"; 
                                             }

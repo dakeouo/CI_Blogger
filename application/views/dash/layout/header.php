@@ -5,7 +5,7 @@
 <head onload="init();">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<link rel="icon" href="<?php echo base_url("asset/default/dash/favicon.ico"); ?>" type="image/x-icon" />
+	<link rel="icon" href="<?php echo base_url("asset/dash/img/favicon.ico"); ?>" type="image/x-icon" />
 	<title><?php echo $title." - ".$this->config->item('blog_name'); ?></title>
 
 	<!-- Bootstrap Core CSS -->

@@ -17,7 +17,12 @@
                             <div class="panel-body">
                                 <div style="margin-bottom: 10px; display: inline-flex;">
                                     <button type='button' style="margin: 0 5px 0 5px;" class='btn btn-default' onclick="<?php echo "location.href='".base_url("dash/article")."'";?>">返回</button>
-                                    <button type='button' style="margin: 0 5px 0 5px;" class='btn btn-success'>發布</button>
+                                    <?php if($AC != -1){
+                                        if($AC[0]->status == 0){
+                                            echo '<button type=\'button\' style="margin: 0 5px 0 5px;" class=\'btn btn-success\' onclick="location.href=\''.base_url("dash/article/publish/".$AC[0]->id).'\'">發布</button>';
+                                        }else{
+                                            echo '<button type=\'button\' style="margin: 0 5px 0 5px;" class=\'btn btn-primary\' onclick="location.href=\''.base_url("dash/article/draft/".$AC[0]->id).'\'">還原成草稿</button>';
+                                    }} ?>
                                 </div>
                                 <div class="table-responsive">
                                     <form role="form" method="POST" action="<?php echo base_url("dash/article/save") ?>">
@@ -36,7 +41,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-12" style="margin-top: 10px;"><textarea id="textbox" name="content" style="width: 100%; height: 400px;">
-                                        <?php if($AC != -1) include_once "application/content/".$AC[0]->id.".html"; ?>
+                                        <?php if($AC != -1) include_once $this->config->item('content_url').$AC[0]->id.".html"; ?>
                                         </textarea></div>
                                         <div class="col-sm-12" style="margin-top: 10px;"><input class="form-control" name="tag" placeholder="標籤" value="<?php if($AC != -1) echo $AC[0]->tags ?>"></div>
                                         <div class="col-sm-12" style="color: red;">注意：請使用[空格]來隔開標籤。</div>

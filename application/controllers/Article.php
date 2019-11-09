@@ -9,6 +9,7 @@ class Article extends CI_Controller {
 		$data = array(
 			'email' => $this->session->userdata('userEmail'),
 			'username' => $this->session->userdata('userName'),
+			'userphoto' => $this->session->userdata('userPhoto'),
 			'title' => $title
 		);
 
@@ -216,5 +217,59 @@ class Article extends CI_Controller {
 		$this->load->view('dash/article-post', $data);
 		$this->load->view('dash/layout/footer');
 		$this->load->view('tag_body_end');
+	}
+
+	public function previewArticle($id){
+		$this->load->model('blogModel');
+		$data['title'] = "[預覽]".$this->blogModel->getArticleTitle($id);
+		$data['author'] = $this->blogModel->getAuthInfo();
+		$data['app_link'] = $this->blogModel->getAuthLink();
+		$data['cate_list'] = $this->blogModel->getCateList();
+		$data['tags_list'] = $this->blogModel->getTagsList();
+		$data['article'] = $this->blogModel->getSingleArticle($id);
+		$this->load->helper('url');	
+		$this->load->view('blog/layout/header',$data);
+		$this->load->view('blog/preview',$data);
+		$this->load->view('blog/layout/left-nav',$data);
+		$this->load->view('blog/layout/footer');
+	}
+
+	public function publishArticle($id){
+		$this->load->model('articleModel');
+		$result = $this->articleModel->publishDraft($id);
+		switch ($result["mode"]) {
+			case -1:
+				$this->index($result["msg"]);
+				break;
+			case 2:
+				$this->index($result["msg"]);
+				break;
+			case 3:
+				$this->load->helper('url');
+				header("Location:".base_url("dash/article"));
+				break;
+			default:
+				# code...
+				break;
+		}
+	}
+	public function draftArticle($id){
+		$this->load->model('articleModel');
+		$result = $this->articleModel->toDraft($id);
+		switch ($result["mode"]) {
+			case -1:
+				$this->index($result["msg"]);
+				break;
+			case 2:
+				$this->index($result["msg"]);
+				break;
+			case 3:
+				$this->load->helper('url');
+				header("Location:".base_url("dash/article"));
+				break;
+			default:
+				# code...
+				break;
+		}
 	}
 }

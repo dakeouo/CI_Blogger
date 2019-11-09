@@ -27,7 +27,7 @@ class articleModel extends CI_model{
 		$id = $data['id'];
 		$name = $data['name'];
 		
-		$query = $this->db->query('SELECT `id`, `name` FROM `categorys` WHERE `id` = \''.$id.'\' LIMIT 0,1');
+		$query = $this->db->query('SELECT `id`, `name` FROM `categorys` WHERE `id` != "C999" AND `id` = \''.$id.'\' LIMIT 0,1');
 		if($query->num_rows() < 0) return array("mode"=>-1,"msg"=>"查無此類別");
 		$result = $query->result();
 		$oldName = $result[0]->name;
@@ -63,14 +63,14 @@ class articleModel extends CI_model{
 	}
 
 	public function getType(){
-		$query = $this->db->query('SELECT `id`, `name` FROM `categorys` WHERE 1 ORDER BY `id`');
+		$query = $this->db->query('SELECT `id`, `name` FROM `categorys` WHERE `id` != "C999" ORDER BY `id`');
 		$result = $query->result();		//放入查詢結果
 		if($query->num_rows() < 1) return -1;
 		else return $result;
 	}
 
 	public function getCategory(){
-		$query = $this->db->query('SELECT `categorys`.`id`, `categorys`.`name`, COUNT(`articles`.`id`) AS `times` FROM `categorys` LEFT JOIN `articles` ON `categorys`.`id` = `articles`.`category` WHERE `categorys`.`id` <> "C000" AND `categorys`.`isActive` = 1 GROUP BY  `categorys`.`id` ORDER BY `categorys`.`id`');
+		$query = $this->db->query('SELECT `categorys`.`id`, `categorys`.`name`, COUNT(`articles`.`id`) AS `times` FROM `categorys` LEFT JOIN `articles` ON `categorys`.`id` = `articles`.`category` WHERE `categorys`.`id` != "C999" AND `categorys`.`id` <> "C000" AND `categorys`.`isActive` = 1 GROUP BY  `categorys`.`id` ORDER BY `categorys`.`id`');
 		$result = $query->result();		//放入查詢結果
 		if($query->num_rows() < 1) return -1;
 		else return $result;
@@ -84,7 +84,7 @@ class articleModel extends CI_model{
 	}
 
 	public function getArticle(){
-		$query = $this->db->query('SELECT `a`.`id`, `c`.`name` AS `category`, `a`.`title`, `a`.`publishTime`, `a`.`status` FROM `articles` AS `a` LEFT JOIN `categorys` AS `c` ON `a`.`category` = `c`.`id`  WHERE 1 ORDER BY `a`.`editTime`');
+		$query = $this->db->query('SELECT `a`.`id`, `c`.`name` AS `category`, `a`.`title`, `a`.`editTime`, `a`.`publishTime`, `a`.`status` FROM `articles` AS `a` LEFT JOIN `categorys` AS `c` ON `a`.`category` = `c`.`id`  WHERE `c`.`id` != "C999" ORDER BY `a`.`publishTime` DESC');
 		$result = $query->result();		//放入查詢結果
 		if($query->num_rows() < 1) return -1;
 		else return $result;
@@ -136,22 +136,66 @@ class articleModel extends CI_model{
 		return array("mode"=>3,"msg"=>"文章儲存成功");
 	}
 
+	public function publishDraft($id){
+		date_default_timezone_set("Asia/Taipei");
+		$query = $this->db->query('SELECT `id` FROM `articles` WHERE `status` = 1 AND `category` <> "C999" ORDER BY `publishTime` DESC LIMIT 0,1');
+		$result = $query->result();		//放入查詢結果
+		if($query->num_rows() < 1) $back_id = NULL;
+		else{
+			$back_id = $result[0]->id;
+			if($back_id != $id){
+				$this->db->where('id', $back_id);
+				$query = $this->db->update('articles', array('next_id' => $id));
+			}
+		}
+
+		$newData = array('publishTime' => date("Y/m/d H:i:s"), 'back_id' => $back_id, 'status' => 1);
+		$this->db->where('id', $id);
+		$query = $this->db->update('articles', $newData);
+		
+		return array("mode"=>3,"msg"=>"文章發布成功");
+	}
+
+	public function toDraft($id){
+		date_default_timezone_set("Asia/Taipei");
+		$query = $this->db->query('SELECT `back_id`, `next_id` FROM `articles` WHERE `id` = "'.$id.'" LIMIT 0,1');
+		$result = $query->result();		//放入查詢結果
+		if($query->num_rows() < 1) return -1;
+		else{
+			$back_id = $result[0]->back_id;
+			$next_id = $result[0]->next_id;
+			if($back_id != $id){
+				$this->db->where('id', $back_id);
+				$query = $this->db->update('articles', array('next_id' => $next_id));
+			}
+			if($next_id != $id){
+				$this->db->where('id', $next_id);
+				$query = $this->db->update('articles', array('back_id' => $back_id));
+			}
+			$newData = array('publishTime' => NULL, 'back_id' => NULL, 'next_id' => NULL, 'status' => 0);
+			$this->db->where('id', $id);
+			$query = $this->db->update('articles', $newData);
+		}
+		
+		return array("mode"=>3,"msg"=>"文章還原成功");
+	}
+
 	public function getDraft($id){
-		$query = $this->db->query('SELECT `articles`.`id`, `articles`.`category`, `articles`.`title`,  GROUP_CONCAT((`tags`.`name`) separator \' \') AS `tags` FROM `articles` LEFT JOIN `tags` ON `articles`.`id` = `tags`.`aid` WHERE `articles`.`id` = "'.$id.'" GROUP BY `articles`.`id`  LIMIT 0,1');
+		$query = $this->db->query('SELECT `articles`.`id`, `articles`.`category`, `articles`.`title`, `articles`.`status`,  GROUP_CONCAT((`tags`.`name`) separator \' \') AS `tags` FROM `articles` LEFT JOIN `tags` ON `articles`.`id` = `tags`.`aid` WHERE `articles`.`id` = "'.$id.'" GROUP BY `articles`.`id`  LIMIT 0,1');
 		$result = $query->result();		//放入查詢結果
 		if($query->num_rows() < 1) return -1;
 		else return $result;
 	}
 
 	public function getDraft2Cate($id){
-		$query = $this->db->query('SELECT `articles`.`id`, `categorys`.`name` AS `category`,  `articles`.`title`, `articles`.`publishTime`, `articles`.`status` FROM `tags` JOIN `articles` ON `tags`.`aid` = `articles`.`id` JOIN `categorys` ON `categorys`.`id` = `articles`.`category` WHERE `categorys`.`id` = "'.$id.'" GROUP BY `articles`.`id`');
+		$query = $this->db->query('SELECT `articles`.`id`, `categorys`.`name` AS `category`,  `articles`.`title`, `articles`.`publishTime`, `articles`.`editTime`, `articles`.`status` FROM `tags` JOIN `articles` ON `tags`.`aid` = `articles`.`id` JOIN `categorys` ON `categorys`.`id` = `articles`.`category` WHERE `categorys`.`id` != "C999" AND `categorys`.`id` = "'.$id.'" GROUP BY `articles`.`id`');
 		$result = $query->result();		//放入查詢結果
 		if($query->num_rows() < 1) return -1;
 		else return $result;
 	}
 
 	public function getDraft2Tag($name){
-		$query = $this->db->query('SELECT `articles`.`id`, `categorys`.`name` AS `category`,  `articles`.`title`, `articles`.`publishTime`, `articles`.`status` FROM `tags` JOIN `articles` ON `tags`.`aid` = `articles`.`id` JOIN `categorys` ON `categorys`.`id` = `articles`.`category` WHERE `tags`.`name` = "'.$name.'" GROUP BY `articles`.`id`');
+		$query = $this->db->query('SELECT `articles`.`id`, `categorys`.`name` AS `category`,  `articles`.`title`, `articles`.`publishTime`, `articles`.`editTime`, `articles`.`status` FROM `tags` JOIN `articles` ON `tags`.`aid` = `articles`.`id` JOIN `categorys` ON `categorys`.`id` = `articles`.`category` WHERE `categorys`.`id` != "C999" AND `tags`.`name` = "'.$name.'" GROUP BY `articles`.`id`');
 		$result = $query->result();		//放入查詢結果
 		if($query->num_rows() < 1) return -1;
 		else return $result;

@@ -708,9 +708,14 @@ table.table-filter tr td table tr td:hover{
 }
 .author-link{
     font-size: 16px;
+    line-height: 1.5em;
     font-family: 'Noto Sans TC','Arial';
 }
 .author-link label{
-    color: #666;
+    color: #DB8000;
+    font-weight: 600;
+}
+.author-link label.null{
+    color: #ccc;
     font-weight: 400;
 }

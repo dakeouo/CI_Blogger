@@ -59,6 +59,18 @@ $route['dash/login']['POST'] = 'dash/loginCheck';
 $route['dash/changePasswd']['GET'] = 'dash/changePasswd';
 $route['dash/changePasswd']['POST'] = 'dash/changePasswdCheck';
 
+$route['dash/cpe'] = 'dash/CPE_Index';
+$route['dash/cpe/upload'] = 'dash/CPE_Upload';
+$route['dash/cpe/preview/([0-9]{5})'] = 'dash/previewCPE/$1';
+$route['dash/cpe/delete/([0-9]{5})'] = 'dash/CPE_Delete/$1';
+
+$route['dash/author'] = 'dash/author';
+$route['dash/author/upload'] = 'dash/userUpload';
+$route['dash/author/link']['GET'] = 'dash/linkEdit';
+$route['dash/author/link']['POST'] = 'dash/linkEditPost';
+$route['dash/author/info']['GET'] = 'dash/userInfo';
+$route['dash/author/info']['POST'] = 'dash/userInfoPost';
+
 $route['dash/category']['GET'] = 'article/category';
 $route['dash/category']['POST'] = 'article/categoryNew';
 $route['dash/category/view/C([0-9]{3})'] = 'article/categoryView/C$1';
@@ -68,6 +80,17 @@ $route['dash/category/delete/C([0-9]{3})'] = 'article/categoryDelete/C$1';
 
 $route['dash/article']['GET'] = 'article/index';
 $route['dash/article/new'] = 'article/postArticle';
+$route['dash/article/preview/([0-9]{14})'] = 'article/previewArticle/$1';
 $route['dash/article/edit/([0-9]{14})'] = 'article/ArticleEdit/$1';
 $route['dash/article/save'] = 'article/postArticleSave';
+$route['dash/article/publish/([0-9]{14})'] = 'article/publishArticle/$1';
+$route['dash/article/draft/([0-9]{14})'] = 'article/draftArticle/$1';
 $route['dash/article/delete/([0-9]{14})']['GET'] = 'article/ArticleDelete/$1';
+
+$route['blog/(:num)'] = 'blog/index/$1';
+$route['blog/about'] = 'blog/about';
+$route['blog/article/([0-9]{14})'] = 'blog/SingleArticle/$1';
+$route['blog/category/(:any)/(:num)'] = 'blog/categoryView/$1/$2';
+$route['blog/tag/(:any)/(:num)'] = 'blog/tagView/$1/$2';
+$route['blog/cpe'] = 'blog/cpeList';
+$route['blog/cpe/view/([0-9]{5})'] = 'blog/cpeSingle/$1';

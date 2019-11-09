@@ -43,7 +43,7 @@ class userModel extends CI_model{
 		$mode = $data['mode'];
 		if(isset($data['code'])) $code = $data['code'];
 
-		$this->db->select('passwd, username');
+		$this->db->select('passwd, username, photo');
 		$query = $this->db->get_where('users', array('email' => $email));
 		$result = $query->result();		//放入查詢結果
 		if(!count($result)) return array("mode"=>-1,"msg"=>"查無此帳號，請重新輸入"); 	//查不到回傳-1
@@ -60,6 +60,7 @@ class userModel extends CI_model{
 					$this->load->library('session');
 					$this->session->set_userdata('userEmail', $email);
 					$this->session->set_userdata('userName', $result[0]->username);
+					$this->session->set_userdata('userPhoto', $result[0]->photo);
 					return array("mode"=>3,"msg"=>"登入成功");
 				}
 				else return array("mode"=>-1,"msg"=>"發生技術性錯誤，請稍後再試");
@@ -75,5 +76,90 @@ class userModel extends CI_model{
 				return array("mode"=>-1,"msg"=>"發生技術性錯誤，請稍後再試");
 				break;
 		}
+	}
+
+	public function getApp(){
+		$query = $this->db->query('SELECT * FROM `app_icon` WHERE 1 ORDER BY `icon_front` ASC');
+		$result = $query->result();		//放入查詢結果
+		if($query->num_rows() < 1) return -1;
+		else return $result;
+	}
+
+	public function userUpload($data){
+		$this->load->library('session');
+		$image = $data['image'];
+		$newName = $data['name'];
+		$oldName = $this->session->userdata('userName');
+		$oldPhoto = $this->session->userdata('userPhoto');
+		$email = $this->session->userdata('userEmail');
+
+		//變更作者名稱
+		if($newName != $oldName){
+			$this->db->select('username');
+			$query = $this->db->get_where('users', array('email' => $email));
+			$result = $query->result();		//放入查詢結果
+			if(!count($result)) return array("mode" => -1,"msg" => "查無此帳號");
+			else{
+				$this->db->where('email', $email);
+				$query = $this->db->update('users', array('username' => $newName));
+				$this->session->set_userdata('userName', $newName);
+			}
+		}
+
+		if($image['name'] != ""){
+			$file_dir = "asset/default/users/";
+			$file_name = $image["name"];
+			$uploadOk = 1;
+			$imageFileType = strtolower(pathinfo($file_name,PATHINFO_EXTENSION));
+
+			$check = getimagesize($image["tmp_name"]);
+    		if($check !== false) {
+        		if(move_uploaded_file($image["tmp_name"], $file_dir.$file_name)){
+			        if(($oldPhoto != "none.png")AND($oldPhoto != $file_name)){
+			        	unlink($file_dir.$oldPhoto);
+			        }
+			        $this->db->where('email', $email);
+					$query = $this->db->update('users', array('photo' => $file_name));
+					$this->session->set_userdata('userPhoto', $file_name);
+			    }else{
+			    	return array("mode"=>2,"msg"=>"上傳圖片失敗");
+			    }
+    		}else{
+        		return array("mode"=>2,"msg"=>"上傳的並非圖片");
+    		}
+		}
+		
+
+		return array("mode"=>3,"msg"=>"修改完成");
+	}
+
+	public function linkPost($data){
+		$input = $data['input'];
+		$type = $data['type'];
+		for($i=0; $i<count($type); $i++){
+			if($input[$i] == "") $input[$i] = NULL;
+			$this->db->where('app', $type[$i]);
+			$query = $this->db->update('app_icon', array("link" => $input[$i]));
+		}
+
+		return array("mode"=>3,"msg"=>"修改完成");
+	}
+
+	public function aboutPost($data){
+		date_default_timezone_set("Asia/Taipei");
+
+		//新增內文檔案
+		$id = $data['id'];
+		$content_url = $this->config->item('content_url');
+		$fileName = $content_url.$id.".html";
+		$createFile = fopen($fileName, 'w+') or die('Cannot open file:  '.$fileName);
+		fwrite($createFile, $data['content']);
+		fclose($createFile);
+
+		//儲存編輯時間
+		$this->db->where('id', $id);
+		$query = $this->db->update('articles', array('editTime' => $data['editTime']));
+		
+		return array("mode"=>3,"msg"=>"文章儲存成功");
 	}
 }

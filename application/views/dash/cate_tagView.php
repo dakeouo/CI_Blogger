@@ -22,11 +22,10 @@
                                     <table class="table table-striped table-bordered table-hover" id="tag-main-table" style="font-size: 1.1em;">
                                         <thead style="">
                                             <tr>
-                                                <td width="100px">編號</td>
                                                 <td>類別</td>
                                                 <td width="auto">標題</td>
-                                                <td width="140px">發布日期</td>
-                                                <td width="50px">瀏覽量</td>
+                                                <td width="150px">修改日期</td>
+                                                <td width="150px">發布日期</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -36,23 +35,24 @@
                                         }else{
                                             foreach($article as $row) {
                                                 echo "<tr>";
-                                                echo "<td>".$row->id."</td>";
                                                 echo "<td>".$row->category."</td>";
                                                 echo "<td style='text-align:left'>".$row->title;
                                                 if(!$row->status) echo '&nbsp;<span style="color: white; background-color: #666; padding: 0 5px; border-radius: 5px;">草稿</span>';
                                                 echo "</td>";
                                                 echo '<td>';
+                                                if(!$row->editTime) echo "無";
+                                                else echo $row->editTime;
+                                                echo '</td>';
+                                                echo '<td>';
                                                 if(!$row->publishTime) echo "無";
                                                 else echo $row->publishTime;
                                                 echo '</td>';
-                                                echo "<td>0</td>";
                                                 echo "</tr>";
                                             }
                                         }
                                         ?>
                                         </tbody> 
                                     </table>
-                                    <span id='table_page'></span>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <script>
         function index(){
@@ -68,5 +67,4 @@
             if(msg == -1) document.getElementById('msg-box').style.display = "none";
             else document.getElementById('msg-box').style.display = "block";
         }
-        $('#tag-main-table').tablepage($("#table_page"), 10);
     </script>
