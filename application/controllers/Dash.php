@@ -10,6 +10,7 @@ class Dash extends CI_Controller {
 			'email' => $this->session->userdata('userEmail'),
 			'username' => $this->session->userdata('userName'),
 			'userphoto' => $this->session->userdata('userPhoto'),
+			'userslogan' => $this->session->userdata('userSlogan'),
 			'title' => $title
 		);
 
@@ -131,7 +132,8 @@ class Dash extends CI_Controller {
 		$this->load->model('userModel');
 		$data = array(
 			'image' => $_FILES['author-img'],
-			'name' => urldecode($_POST['author-name'])
+			'name' => urldecode($_POST['author-name']),
+			'slogan' => urldecode($_POST['author-slogan'])
 		);
 		$result = $this->userModel->userUpload($data);
 		switch ($result["mode"]) {
@@ -283,5 +285,9 @@ class Dash extends CI_Controller {
 				# code...
 				break;
 		}
+	}
+
+	public function system_reset(){
+		
 	}
 }

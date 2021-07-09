@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class articleModel extends CI_model{
+class ArticleModel extends CI_model{
 
 	public function __construct(){
 		$this->load->database();

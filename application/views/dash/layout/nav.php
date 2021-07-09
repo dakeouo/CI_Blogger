@@ -42,7 +42,7 @@
                     <ul class="nav nav-second-level">
                         <li><a href="<?php echo base_url("dash/author");?>">作者資訊</a></li>
                         <li><a href="<?php echo base_url("dash/changePasswd");?>">更改密碼</a></li>
-                        <li><a href="#">系統重置</a></li>
+                        <li><a href="<?php echo base_url("dash/reset");?>">系統重置</a></li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>

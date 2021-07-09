@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'dash';
+$route['default_controller'] = 'blog';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -58,6 +58,8 @@ $route['dash/login']['GET'] = 'dash/login';
 $route['dash/login']['POST'] = 'dash/loginCheck';
 $route['dash/changePasswd']['GET'] = 'dash/changePasswd';
 $route['dash/changePasswd']['POST'] = 'dash/changePasswdCheck';
+
+$route['dash/reset'] = 'dash/system_reset';
 
 $route['dash/cpe'] = 'dash/CPE_Index';
 $route['dash/cpe/upload'] = 'dash/CPE_Upload';

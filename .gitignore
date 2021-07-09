@@ -39,3 +39,5 @@ application/content/
 application/views/blog
 application/controllers/Blog.php
 asset/blog
+asset/dash
+asset/default/

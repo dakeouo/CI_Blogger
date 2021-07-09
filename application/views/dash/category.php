@@ -28,7 +28,7 @@
                                             <tr>
                                                 <td width="50px">編號</td>
                                                 <td>名稱</td>
-                                                <td width="50px">文章數</td>
+                                                <td width="70px">文章數</td>
                                                 <td width="50px">檢視</td>
                                                 <td width="50px">修改</td>
                                                 <td width="50px">刪除</td>
@@ -81,7 +81,7 @@
                                         <thead style="">
                                             <tr>
                                                 <td>名稱</td>
-                                                <td width="50px">文章數</td>
+                                                <td width="70px">文章數</td>
                                                 <td width="50px">檢視</td>
                                             </tr>
                                         </thead>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class userModel extends CI_model{
+class UserModel extends CI_model{
 
 	public function __construct(){
 		$this->load->database();
@@ -43,7 +43,7 @@ class userModel extends CI_model{
 		$mode = $data['mode'];
 		if(isset($data['code'])) $code = $data['code'];
 
-		$this->db->select('passwd, username, photo');
+		$this->db->select('passwd, username, photo, slogan');
 		$query = $this->db->get_where('users', array('email' => $email));
 		$result = $query->result();		//放入查詢結果
 		if(!count($result)) return array("mode"=>-1,"msg"=>"查無此帳號，請重新輸入"); 	//查不到回傳-1
@@ -61,6 +61,7 @@ class userModel extends CI_model{
 					$this->session->set_userdata('userEmail', $email);
 					$this->session->set_userdata('userName', $result[0]->username);
 					$this->session->set_userdata('userPhoto', $result[0]->photo);
+					$this->session->set_userdata('userSlogan', $result[0]->slogan);
 					return array("mode"=>3,"msg"=>"登入成功");
 				}
 				else return array("mode"=>-1,"msg"=>"發生技術性錯誤，請稍後再試");
@@ -89,20 +90,23 @@ class userModel extends CI_model{
 		$this->load->library('session');
 		$image = $data['image'];
 		$newName = $data['name'];
+		$newSlogan = $data['slogan'];
 		$oldName = $this->session->userdata('userName');
 		$oldPhoto = $this->session->userdata('userPhoto');
+		$oldSlogan = $this->session->userdata('userSlogan');
 		$email = $this->session->userdata('userEmail');
 
 		//變更作者名稱
-		if($newName != $oldName){
+		if(($newName != $oldName) or ($newSlogan != $oldSlogan)){
 			$this->db->select('username');
 			$query = $this->db->get_where('users', array('email' => $email));
 			$result = $query->result();		//放入查詢結果
 			if(!count($result)) return array("mode" => -1,"msg" => "查無此帳號");
 			else{
 				$this->db->where('email', $email);
-				$query = $this->db->update('users', array('username' => $newName));
+				$query = $this->db->update('users', array('username' => $newName, 'slogan' => $newSlogan));
 				$this->session->set_userdata('userName', $newName);
+				$this->session->set_userdata('userSlogan', $newSlogan);
 			}
 		}
 

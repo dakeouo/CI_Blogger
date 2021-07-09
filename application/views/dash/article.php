@@ -56,7 +56,7 @@
                                                 echo "<button type='button' style=\"padding:4px 10px;\" class='btn btn-warning'onclick=\"location.href='".base_url("dash/article/edit/".$row->id)."'\">修改</button>";
                                                 echo "</td>";
                                                 echo "<td>";
-                                                echo "<button type='button' style=\"padding:4px 10px;\" class='btn btn-danger disabled' onclick=\"location.href='".base_url("dash/article/delete/".$row->id)."'\">刪除</button>";
+                                                echo "<button type='button' style=\"padding:4px 10px;\" class='btn btn-danger' onclick=\"location.href='".base_url("dash/article/delete/".$row->id)."'\">刪除</button>";
                                                 echo "</td>";
                                                 echo "</tr>"; 
                                             }
@@ -89,6 +89,6 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-        $('#artice-main-table').tablepage($("#table_page"), 10);
+        $('#artice-main-table').tablepage($("#table_page"), 25);
     });
     </script>
