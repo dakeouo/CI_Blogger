@@ -11,24 +11,24 @@
 	<script src="<?php echo base_url('asset/blog/js/skel.min.js');?>"></script>
 	<script src="<?php echo base_url('asset/blog/js/skel-layers.min.js');?>"></script>
 	<script src="<?php echo base_url('asset/blog/js/init.js');?>"></script>
+
+	<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/skel.css'); ?>" />
+	<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/style.css'); ?>" />
+	<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/xlarge.css'); ?>" />
+
 	<!-- Custom Fonts -->
 	<script src="https://kit.fontawesome.com/cdb1f069da.js"></script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/agate.min.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
-	<noscript>
-		<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/skel.css'); ?>" />
-		<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/style.css'); ?>" />
-		<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/xlarge.css'); ?>" />
-	</noscript>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-152749873-1"></script>
-	<script>
+<!-- 	<script>
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
 
 	  gtag('config', 'UA-152749873-1');
-	</script>
+	</script> -->
 </head>
 <body>

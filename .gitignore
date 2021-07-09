@@ -36,8 +36,6 @@ asset/dash/js/flot-data.js
 application/content/
 
 ## testing
-asset/blog/*
-asset/dash/*
-asset/default/*
+asset/*
 
 readme.rst
