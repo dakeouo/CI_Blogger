@@ -11,11 +11,11 @@
 	<script src="<?php echo base_url('asset/blog/js/skel.min.js');?>"></script>
 	<script src="<?php echo base_url('asset/blog/js/skel-layers.min.js');?>"></script>
 	<script src="<?php echo base_url('asset/blog/js/init.js');?>"></script>
-
-	<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/skel.css'); ?>" />
-	<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/style.css'); ?>" />
-	<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/xlarge.css'); ?>" />
-
+	<noscript>
+		<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/skel.css'); ?>" />
+		<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/style.css'); ?>" />
+		<link rel="stylesheet" href="<?php echo base_url('asset/blog/css/xlarge.css'); ?>" />
+	</noscript>
 	<!-- Custom Fonts -->
 	<script src="https://kit.fontawesome.com/cdb1f069da.js"></script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/agate.min.css">
