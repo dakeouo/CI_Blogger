@@ -18,7 +18,7 @@ class Blog extends CI_Controller {
 	public function index($page = 0){
 		$this->load->model('blogModel');
 		$data = $this->setArticleHeader("首頁");
-		$data['subtitle'] = "A novice engineer who is still self-exploring";
+		$data['subtitle'] = "初代自製個人網站，目前為個人作品展示用";
 		$data['Article_list'] = $this->blogModel->getArticleList($page, 5);
 		$data['Article_count'] = $this->blogModel->getArticleCount($page, 5);
 		$this->load->helper('url');	
