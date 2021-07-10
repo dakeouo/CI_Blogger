@@ -8,6 +8,6 @@
 	</div>
 </footer>
 </body>
-<!-- <script src="<?php echo base_url('asset/blog/js/disqus.js');?>"></script> -->
+<!-- <script src="<?php //echo base_url('asset/blog/js/disqus.js');?>"></script> -->
 <!-- <script id="dsq-count-scr" src="//terahake.disqus.com/count.js" async></script> -->
 </html>
