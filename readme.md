@@ -25,5 +25,14 @@
 - [Google Analytics](https://analytics.google.com/analytics/web/)：網頁訪客數據瀏覽與分析
 - [Disqus](https://disqus.com/)：訪客留言管理系統
 
+## 資料表關聯圖
+![image](https://i.imgur.com/9uHgMgx.png)
+使用5個資料表，有3個主要的資料表：
+- 使用者資訊(users)：紀錄使用者資訊。包含信箱、密碼(以MD5方式儲存)、名稱等
+- 社群應用資訊(app_icon)：紀錄我的社群應用資訊(例如IG、FB、YT等)。共有四個欄位，因應用圖示使用Fontawsome，故有兩個欄位(icon_front, icon_id)是在記錄該社群圖示用，其餘兩欄位分別為名稱(app)及連結(link)
+- 文章內容資訊(artices)：紀錄文章資訊。包含標題、類別、建立時間、修改時間等。還有兩個資料表來分儲存**標籤**與**類別**
+  - 標籤(tags)
+  - 類別(categorys)
+
 ## Designer
 [Dake Hong](https://github.com/dakeouo)

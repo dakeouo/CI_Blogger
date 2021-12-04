@@ -105,7 +105,7 @@ class BlogModel extends CI_model{
 	}
 
 	public function getCpeList(){
-		$query = $this->db->query('SELECT `l`.`no`, `c`.`name` AS `category`, `l`.`topic`, `l`.`uva`, `l`.`finishTime` FROM `ciblog_cpe_list` AS `l` JOIN `ciblog_cpe_cate` AS `c` ON `l`.`category` = `c`.`id` WHERE 1');
+		$query = $this->db->query('SELECT `l`.`no`, `c`.`name` AS `category`, `l`.`topic`, `l`.`uva`, `l`.`finishTime` FROM `ciblog_cpe_list` AS `l` JOIN `ciblog_cpe_cate` AS `c` ON `l`.`category` = `c`.`id` WHERE 1 ORDER BY `l`.`no`');
 		$result = $query->result();		//放入查詢結果
 
 		return $result;
